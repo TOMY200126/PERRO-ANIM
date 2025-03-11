@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perrito Corriendo - Good Morning</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .paper {
+            width: 80%;
+            height: 300px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lines {
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(#e0e9ff 1px, transparent 1px);
+            background-size: 100% 50px;
+            position: absolute;
+        }
+        
+        .dog {
+            position: absolute;
+            width: 50px;
+            height: 30px;
+            background-image: url('Dog-animacion.png'); /* Usando tu imagen local */
+            background-size: contain;
+            background-repeat: no-repeat;
+            top: 150px;
+            left: -50px;
+            animation: runDog 15s linear forwards;
+        }
+        
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            opacity: 0;
+        }
+        
+        .letter {
+            position: absolute;
+            font-size: 40px;
+            color: #e06666;
+            opacity: 0;
+            font-weight: bold;
+        }
+        
+        @keyframes runDog {
+            0% { left: -50px; }
+            100% { left: 100%; }
+        }
+        
+        #G1 { top: 130px; left: 10%; animation: fadeIn 0.5s 1s forwards; }
+        #O1 { top: 130px; left: 18%; animation: fadeIn 0.5s 2s forwards; }
+        #O2 { top: 130px; left: 26%; animation: fadeIn 0.5s 3s forwards; }
+        #D { top: 130px; left: 34%; animation: fadeIn 0.5s 4s forwards; }
+        
+        #M { top: 130px; left: 50%; animation: fadeIn 0.5s 6s forwards; }
+        #O3 { top: 130px; left: 58%; animation: fadeIn 0.5s 7s forwards; }
+        #R { top: 130px; left: 66%; animation: fadeIn 0.5s 8s forwards; }
+        #N { top: 130px; left: 74%; animation: fadeIn 0.5s 9s forwards; }
+        #I { top: 130px; left: 82%; animation: fadeIn 0.5s 10s forwards; }
+        #N2 { top: 130px; left: 86%; animation: fadeIn 0.5s 11s forwards; }
+        #G2 { top: 130px; left: 94%; animation: fadeIn 0.5s 12s forwards; }
+        
+        #heart { top: 130px; left: 42%; animation: fadeIn 0.5s 5s forwards; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .restart-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .restart-btn:hover {
+            background-color: #45a049;
+        }
+        
+        /* Para que se vea el perrito más lindo */
+        .dog::before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: black;
+            top: 8px;
+            left: 10px;
+            animation: tailWag 0.5s infinite alternate;
+        }
+        
+        @keyframes tailWag {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(20deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="paper">
+            <div class="lines"></div>
+            <div class="dog" id="dog"></div>
+            <div class="letter" id="G1">G</div>
+            <div class="letter" id="O1">O</div>
+            <div class="letter" id="O2">O</div>
+            <div class="letter" id="D">D</div>
+            <div class="heart" id="heart">❤️</div>
+            <div class="letter" id="M">M</div>
+            <div class="letter" id="O3">O</div>
+            <div class="letter" id="R">R</div>
+            <div class="letter" id="N">N</div>
+            <div class="letter" id="I">I</div>
+            <div class="letter" id="N2">N</div>
+            <div class="letter" id="G2">G</div>
+        </div>
+        <button class="restart-btn" onclick="restartAnimation()">Reiniciar Animación</button>
+    </div>
+    
+    <script>
+        function restartAnimation() {
+            const dog = document.getElementById('dog');
+            const letters = document.querySelectorAll('.letter, .heart');
+            
+            // Reset dog animation
+            dog.style.animation = 'none';
+            dog.offsetHeight; // Trigger reflow
+            dog.style.animation = 'runDog 15s linear forwards';
+            
+            // Reset letter animations
+            letters.forEach(letter => {
+                letter.style.opacity = 0;
+                letter.offsetHeight; // Trigger reflow
+                
+                // Get the original animation
+                const computedStyle = window.getComputedStyle(letter);
+                const originalAnimation = computedStyle.getPropertyValue('animation');
+                
+                // Apply it again
+                letter.style.animation = 'none';
+                letter.offsetHeight; // Trigger reflow
+                letter.style.animation = originalAnimation;
+            });
+        }
+        
+        // Función opcional para cambiar el mensaje
+        function changeMessage(message) {
+            // Esta función permitiría cambiar el mensaje mostrado
+            // tendría que eliminar las letras actuales y crear nuevas
+            // basadas en el mensaje proporcionado
+            console.log("Función para implementar: cambiar mensaje a " + message);
+            // Para implementar esta función, necesitarías manipular el DOM
+            // y recrear elementos con las posiciones adecuadas
+        }
+    </script>
+</body>
+</html>
+![dog-animacion](https://github.com/user-attachments/assets/2c8d0466-4209-4777-a253-befcb3da8f96)
